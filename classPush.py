@@ -12,8 +12,8 @@ pwd = os.environ["PASSWORD"]  # 密码
 app_id = os.environ["APP_ID"]
 # 微信公众号 app_secret
 app_secret = os.environ["APP_SECRET"]
-semester = '2022-2023-1'  # 学期
-firstDay = '2022-08-29'  # 学期开始日期
+semester = '2024-2025-1'  # 学期
+firstDay = '2024-09-01'  # 学期开始日期
 # 用户ID
 user_id_1 = os.environ["USER_ID_1"]
 user_id_2 = os.environ["USER_ID_2"]
@@ -30,8 +30,8 @@ template_id_noclass = os.environ["TEMPLATE_ID_NOCLASS"]
 # "sjbz": "0" // 具体意义未知，据观察值为1时本课单周上，2时双周上
 
 user_id_list = [
-    {'user_id': user_id_1, "name": 'Orange', "date": "2021-04-02", "birthday": "05-28",
-     'city': '110108'}
+    {'user_id': user_id_1, "name": 'CIAN', "date": "2023-09-03", "birthday": "06-16",
+     'city': '120118'}
     # ,{'user_id': user_id_2, "name": 'Orange', "date": "2021-04-02", "birthday": "05-28",
     #  'city': '110108'}
 ]
@@ -77,7 +77,7 @@ def getNowClass():
     # 获取现在时间的小时和分钟
     year = now.year
     hour = now.hour
-    minute = now.minute + 20
+    minute = now.minute + 15
     second = now.second
     # 如果分钟大于60，小时加1，分钟减60
     if minute >= 60:
@@ -95,11 +95,11 @@ def getNowClass():
     # 判断当前时间所在第几节课
     # 如果当前时间位于 8:00 到 9:35 之间，返回 1
     # Github采用UTC时间，北京时间比UTC时间早8小时
-    dt1 = datetime.datetime.strptime('00:00:00', '%H:%M:%S')
-    dt2 = datetime.datetime.strptime('01:50:00', '%H:%M:%S')
+    dt1 = datetime.datetime.strptime('00:30:00', '%H:%M:%S')
+    dt2 = datetime.datetime.strptime('02:10:00', '%H:%M:%S')
     dt3 = datetime.datetime.strptime('05:30:00', '%H:%M:%S')
     dt4 = datetime.datetime.strptime('07:20:00', '%H:%M:%S')
-    dt5 = datetime.datetime.strptime('10:30:00', '%H:%M:%S')
+    dt5 = datetime.datetime.strptime('09:55:00', '%H:%M:%S')
     dtNow = datetime.datetime.strptime(nowTime, '%H:%M:%S')
     # print((dtNow - dt1).seconds)
     if 0 <= (dtNow - dt1).seconds < 5700:
@@ -117,12 +117,12 @@ def getNowClass():
 
 
 def Crawl():
-    loginLink = "http://newjwxt.bjfu.edu.cn/app.do?method=authUser&xh=" + id + "&pwd=" + pwd
+    loginLink = "http://jiaowu.tjutcm.edu.cn/jsxsd/app.do?method=authUser&xh=" + id + "&pwd=" + pwd
     rep = requests.get(loginLink)
     res = json.loads(rep.text)
     # 使用账号密码换取网站 token
     token = res["token"]
-    tableUrl = "http://newjwxt.bjfu.edu.cn/app.do?method=getKbcxAzc&xh=" + id + "&xnxqid=" + semester + "&zc=" + week
+    tableUrl = "http://jiaowu.tjutcm.edu.cn/jsxsd/app.do?method=getKbcxAzc&xh=" + id + "&xnxqid=" + semester + "&zc=" + week
     header = {
         "token": token  # 传入 token ，鉴权
     }
